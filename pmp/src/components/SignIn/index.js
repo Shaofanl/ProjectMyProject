@@ -25,10 +25,6 @@ class SignInGoogleBase extends React.Component {
   onSubmit = event => {
     this.props.firebase.doSignInWithGoogle()
       .then(gUser => {
-        this.props.firebase.user(gUser.user.uid).once('value').then(
-          snapshot => {console.log(snapshot.val())}
-        )
-
         return this.props.firebase
           .user(gUser.user.uid)
           .set({

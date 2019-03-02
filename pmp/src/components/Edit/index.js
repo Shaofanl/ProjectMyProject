@@ -7,6 +7,7 @@ const Edit = () => (
     {authUser => (
       <div>
         <p>Edit</p>
+        <p>{JSON.stringify(authUser)}</p>
       </div>
     )}
   </AuthUserContext.Consumer>
