@@ -24,14 +24,6 @@ class SignInGoogleBase extends React.Component {
 
   onSubmit = event => {
     this.props.firebase.doSignInWithGoogle()
-      .then(gUser => {
-        return this.props.firebase
-          .user(gUser.user.uid)
-          .set({
-            username: gUser.user.displayName,
-            email: gUser.user.email
-          });
-      })
       .then(() => {
         this.setState({error:null});
         this.props.history.push(ROUTES.EDIT);

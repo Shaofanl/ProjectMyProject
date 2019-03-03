@@ -1,11 +1,31 @@
 import React from 'react';
 
-const Publish = () => (
-  <div>
-    <p>Publish</p>
-    <p>render iframe with swig </p>
-  </div>
+import { AuthUserContext, withAuthorization } from '../Session'
+
+const PublishPage = () => (
+  <AuthUserContext.Consumer>
+    {authUser => (
+        <div>
+          <p>Publish</p>
+          <p>render iframe with swig </p>
+          <PublishRender authUser={authUser}/>
+        </div>
+    )}
+  </AuthUserContext.Consumer>
 );
 
+class PublishRender extends React.Component {
+  render = () => {
+    var str = JSON.stringify(this.props.authUser);
+    return (
+      <div>
+        <p>{str}</p>
+      </div>
+    );
+  };
+};
 
-export default Publish;
+const condition = user => !!user;
+
+export default withAuthorization(condition)(PublishPage);
+export { PublishRender };

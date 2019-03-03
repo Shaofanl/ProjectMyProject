@@ -2,6 +2,8 @@ import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
+import { init_user_data } from '../../templates/project'
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -40,15 +42,24 @@ class Firebase {
           .then(snapshot => {
             const dbUser = snapshot.val();
 
-            // merge auth and db user
-            authUser = {
-              uid: authUser.uid,
-              email: authUser.email,
-              ...dbUser,
-            };
-
-            next(authUser);
-          });
+            // initialize users
+            if (dbUser == null) {
+              // new users
+              return this.user(authUser.uid)
+                .set({
+                  email: authUser.email,
+                  username: authUser.displayName,
+                  data: init_user_data 
+                }).then(() => this.user(authUser.uid).once('value'))
+            }
+            else
+              return this.user(authUser.uid).once('value')
+          })
+        .then(snapshot => {
+          const dbUser = snapshot.val();
+          authUser = {...dbUser, uid: authUser.uid};
+          next(authUser);
+        });
       } else {
         fallback();
       }
