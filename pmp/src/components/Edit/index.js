@@ -43,8 +43,6 @@ class Edit extends React.Component {
       <div>
 
         <p>Edit</p>
-        <p>{JSON.stringify(authUser)}</p>
-
         <Tab.Container defaultActiveKey="Projects">
           <Row>
             <Col sm={3}>

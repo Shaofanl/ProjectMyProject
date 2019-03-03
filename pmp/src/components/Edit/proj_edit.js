@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { Form, Button, Card, Row, Col } from 'react-bootstrap'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
 import { get_init_project } from '../../templates/project'
 
@@ -36,7 +37,7 @@ class ProjectEditorList extends React.Component {
       <div>
         {plist}
         <Button className="float-right" onClick={this.add_proj}>
-          Add a new project
+          Add Project <FontAwesomeIcon icon={faPlus} />
         </Button>
 
       </div>
@@ -45,6 +46,16 @@ class ProjectEditorList extends React.Component {
 };
 
 class ProjectEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = { show: false };
+  }
+
+  toggle = () => {
+    this.setState(state => ({ ...state, show: !state.show }));
+  }
+
   remove_proj = () => {
     if (window.confirm(`Are you sure to delete this project "${this.props.proj.title}"?`)) {
       this.props.removeProj(this.props.pid);
@@ -63,9 +74,17 @@ class ProjectEditor extends React.Component {
 
     return (
   <div>
-    <p>{JSON.stringify(proj)}</p>
-
-    <Card border="secondary">
+    <Card border="primary">
+      <Card.Header as="h5">
+        {proj.title || "<No title>"}
+        <Button size="sm"
+          className="float-right"
+          onClick={this.toggle}>
+          <FontAwesomeIcon  icon={this.state.show?faCaretUp:faCaretDown}/>
+        </Button>
+      </Card.Header>
+    
+      {this.state.show?
       <Card.Body>
         <Form>
           <Form.Group as={Row}>
@@ -136,7 +155,7 @@ class ProjectEditor extends React.Component {
         <Button variant="outline-danger" onClick={this.remove_proj}>
           Remove Project
         </Button>
-      </Card.Body>
+      </Card.Body>:null}
     </Card>
 
     <br/>
