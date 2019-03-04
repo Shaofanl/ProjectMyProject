@@ -1,9 +1,10 @@
 import moment from 'moment'
 
-export const get_init_project = () => {
+export const get_init_project = (dims) => {
   let date = moment(new Date()).format("YYYY-MM-DD");
   return {
-      dimensions: {},
+      dimensions: Object.keys(dims).reduce((acc, did) => 
+                      ({ ...acc, [did]: "" }), {}),
       title: "",
       subtitle: "",
       start_date: date,
@@ -20,7 +21,7 @@ export const init_user_template = {
   dim_nxt_id: 2,
   projects: {
     1: {
-      dimensions: {"1": ["Example", "coding"]},
+      dimensions: {"1": "coding;here"},
       title: "Example project",
       subtitle: "This is an example project",
       start_date: "2019-01-01",

@@ -34,11 +34,25 @@ function rootReducer(state = initialState, action) {
     case ACTIONTYPE.UPDATE_DIM: {
       let {did, data} = action.payload;
       let dim_nxt_id = state.dim_nxt_id;
+      let prev_projects = state.projects;
 
       if (did === -1) {
         data = "";
         did = dim_nxt_id;
         dim_nxt_id += 1;
+
+        prev_projects = 
+          Object.entries(state.projects).reduce((acc, [pid, proj]) =>
+              ({
+                ...acc,
+                [pid]: {
+                  ...proj,
+                  dimensions: {
+                    ...proj.dimensions,
+                    [did]: ""
+                  }
+                }
+              }), {});
       }
 
       return {
@@ -47,7 +61,8 @@ function rootReducer(state = initialState, action) {
         dimensions: {
           ...state.dimensions,
           [did]: data
-        }
+        },
+        projects: prev_projects
       }
     }
     case ACTIONTYPE.UPDATE_PROJ: {
@@ -59,7 +74,7 @@ function rootReducer(state = initialState, action) {
         pid = project_nxt_id;
         project_nxt_id += 1;
 
-        data = get_init_project();
+        data = get_init_project(state.dimensions);
       }
       else
         prev_data = state.projects[pid];

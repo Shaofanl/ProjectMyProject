@@ -70,7 +70,7 @@ class ProjectEditorList extends React.Component {
 class ProjectEditor extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = { show: true };
   }
 
@@ -84,7 +84,7 @@ class ProjectEditor extends React.Component {
     }
   }
 
-  update_field = (key, value_attr='value') => (event) => {
+  get_updator = (key, value_attr='value') => (event) => {
     this.props.updateProj(
       this.props.pid,
       { [key]: event.target[value_attr] }
@@ -125,7 +125,7 @@ class ProjectEditor extends React.Component {
             <Col sm={10}>
               <Form.Control type="text"
                 placeholder="Enter the title of the project"
-                onChange={this.update_field("title")}
+                onChange={this.get_updator("title")}
                 value={proj.title}/>
             </Col>
           </Form.Group>
@@ -135,7 +135,7 @@ class ProjectEditor extends React.Component {
             <Col sm={10}>
               <Form.Control type="subtitle"
                 placeholder="Enter the subtitle of the project"
-                onChange={this.update_field("subtitle")}
+                onChange={this.get_updator("subtitle")}
                 value={proj.subtitle}/>
             </Col>
           </Form.Group>
@@ -146,7 +146,7 @@ class ProjectEditor extends React.Component {
             <Form.Label column sm={proj.is_ongoing?2:4}>Start Date:</Form.Label>
             <Col sm={proj.is_ongoing?10:8}>
             <Form.Control type="date"
-                onChange={this.update_field("start_date")}
+                onChange={this.get_updator("start_date")}
                 value={proj.start_date}/>
             </Col>
           </Form.Group>
@@ -158,7 +158,7 @@ class ProjectEditor extends React.Component {
               <Form.Label column sm={4}>End Date:</Form.Label>
               <Col sm={8}>
                 <Form.Control type="date"
-                    onChange={this.update_field("end_date")}
+                    onChange={this.get_updator("end_date")}
                     value={proj.end_date}/>
               </Col>
             </Form.Group>
@@ -168,20 +168,22 @@ class ProjectEditor extends React.Component {
 
           <Form.Group>
             <Form.Check inline label="Still Ongoing"
-              onChange={this.update_field("is_ongoing", "checked")} 
+              onChange={this.get_updator("is_ongoing", "checked")} 
               checked={proj.is_ongoing}/>
           </Form.Group> 
 
           <Form.Group>
-            <Form.Label>Dimensions (split with ;):</Form.Label>
-            <DimensionInput dims={proj.dimensions}/>
+            <Form.Label>Dimensions (split with ";"):</Form.Label>
+            <DimensionInput
+              updateProj={this.props.updateProj}
+              dims={proj.dimensions} pid={this.props.pid}/>
           </Form.Group>
 
           <Form.Group>
             <Form.Label>Description:</Form.Label>
             <Form.Control as="textarea"
               placeholder="Enter the description of the project (in markdown)"
-              onChange={this.update_field("description")}
+              onChange={this.get_updator("description")}
               value={proj.description} rows={10}/>
           </Form.Group>
         </Form>
