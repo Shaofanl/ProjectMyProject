@@ -1,27 +1,36 @@
 import React from 'react'
 
-import { Form, Button, Card, Row, Col } from 'react-bootstrap'
+import { Form, Button, ButtonToolbar, Card, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { // faEye, faEyeSlash,
+          faTrashAlt, faPlus,
+          faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
-import { get_init_project } from '../../templates/project'
+// import { get_init_project } from '../../templates/project'
 
 import { connect } from 'react-redux'
 import { removeProj, updateProj } from '../../redux/actions'
+import DimensionInput from './dim_input'
 
 
 class ProjectEditorList extends React.Component {
   add_proj = () => {
     this.props.updateProj(
         -1,  // new proj
-        get_init_project()
+        null
     );
+  }
+
+  show_all = () => {
+  }
+
+  hide_all = () => {
   }
 
   render = () => {
     let plist = [];
     for (let pid in this.props.projects) {
-      if (!!this.props.projects[pid]) {  // not undefined
+      if (Object.keys(this.props.projects[pid]).length !== 0) {  // not undefined
         plist.push(
           <ProjectEditor 
             key={pid}
@@ -36,9 +45,22 @@ class ProjectEditorList extends React.Component {
     return (
       <div>
         {plist}
-        <Button className="float-right" onClick={this.add_proj}>
-          Add Project <FontAwesomeIcon icon={faPlus} />
-        </Button>
+
+        <ButtonToolbar className="float-right" >
+          { /*<Button
+            className="mr-1"
+            variant="outline-info" onClick={this.show_all}>
+            Show All <FontAwesomeIcon icon={faEye} />
+          </Button>
+          <Button
+            className="mr-1"
+            variant="outline-info" onClick={this.hide_all}>
+            Hide All <FontAwesomeIcon icon={faEyeSlash} />
+          </Button>*/}
+          <Button variant="outline-success" onClick={this.add_proj}>
+            Add Project <FontAwesomeIcon icon={faPlus} />
+          </Button>
+        </ButtonToolbar>
 
       </div>
     );
@@ -49,7 +71,7 @@ class ProjectEditor extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = { show: false };
+    this.state = { show: true };
   }
 
   toggle = () => {
@@ -74,21 +96,32 @@ class ProjectEditor extends React.Component {
 
     return (
   <div>
+    <p>{JSON.stringify(proj)}</p>
     <Card border="primary">
       <Card.Header as="h5">
         {proj.title || "<No title>"}
+        <Button
+          variant="outline-danger"
+          size="sm"
+          className="float-right ml-1"
+          onClick={this.remove_proj}>
+          <FontAwesomeIcon icon={faTrashAlt}/>
+        </Button>
+
         <Button size="sm"
+          variant="outline-secondary"
           className="float-right"
           onClick={this.toggle}>
           <FontAwesomeIcon  icon={this.state.show?faCaretUp:faCaretDown}/>
         </Button>
+
       </Card.Header>
     
       {this.state.show?
       <Card.Body>
         <Form>
           <Form.Group as={Row}>
-            <Form.Label column sm={2}>Title</Form.Label>
+            <Form.Label column sm={2}>Title:</Form.Label>
             <Col sm={10}>
               <Form.Control type="text"
                 placeholder="Enter the title of the project"
@@ -98,7 +131,7 @@ class ProjectEditor extends React.Component {
           </Form.Group>
 
           <Form.Group as={Row}>
-            <Form.Label column sm={2}>Subtitle</Form.Label>
+            <Form.Label column sm={2}>Subtitle:</Form.Label>
             <Col sm={10}>
               <Form.Control type="subtitle"
                 placeholder="Enter the subtitle of the project"
@@ -110,7 +143,7 @@ class ProjectEditor extends React.Component {
           <Form.Row>
           <Col>
           <Form.Group as={Row}>
-            <Form.Label column sm={proj.is_ongoing?2:4}>Start Date</Form.Label>
+            <Form.Label column sm={proj.is_ongoing?2:4}>Start Date:</Form.Label>
             <Col sm={proj.is_ongoing?10:8}>
             <Form.Control type="date"
                 onChange={this.update_field("start_date")}
@@ -122,7 +155,7 @@ class ProjectEditor extends React.Component {
           {proj.is_ongoing?null:
             <Col>
             <Form.Group as={Row}>
-              <Form.Label column sm={4}>End Date</Form.Label>
+              <Form.Label column sm={4}>End Date:</Form.Label>
               <Col sm={8}>
                 <Form.Control type="date"
                     onChange={this.update_field("end_date")}
@@ -140,21 +173,19 @@ class ProjectEditor extends React.Component {
           </Form.Group> 
 
           <Form.Group>
-            <Form.Label>Dimensions</Form.Label>
-            <DimensionFrom dims={proj.dimensions}/>
+            <Form.Label>Dimensions (split with ;):</Form.Label>
+            <DimensionInput dims={proj.dimensions}/>
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Description</Form.Label>
+            <Form.Label>Description:</Form.Label>
             <Form.Control as="textarea"
               placeholder="Enter the description of the project (in markdown)"
               onChange={this.update_field("description")}
               value={proj.description} rows={10}/>
           </Form.Group>
         </Form>
-        <Button variant="outline-danger" onClick={this.remove_proj}>
-          Remove Project
-        </Button>
+
       </Card.Body>:null}
     </Card>
 
@@ -164,15 +195,8 @@ class ProjectEditor extends React.Component {
   }
 };
 
-const DimensionFrom = ({ dims }) => (
-    <div>
-    {JSON.stringify(dims)}
-    </div>
-);
-
 
 export default connect(
   state => ({ ...state }), 
   { updateProj, removeProj }
 )(ProjectEditorList);
-

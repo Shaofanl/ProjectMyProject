@@ -5,8 +5,8 @@ import { /* Alert, */ Tab, Button, Row, Col, Nav} from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 
-import ProjectEditor from './proj_edit'
-import DimensionEditor from './dim_edit'
+import ProjectEditorList from './proj_edit'
+import DimensionEditorList from './dim_edit'
 
 
 class Edit extends React.Component {
@@ -41,6 +41,7 @@ class Edit extends React.Component {
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
+        <p>{JSON.stringify(this.props.data)}</p>
 
         <p>Edit</p>
         <Tab.Container defaultActiveKey="Projects">
@@ -56,7 +57,7 @@ class Edit extends React.Component {
                 </Nav.Item>
 
                 <Nav.Item>
-                  <Nav.Link eventKey="Theme" className="text-right" disabled>Theme</Nav.Link>
+                  <Nav.Link eventKey="Theme" className="text-right" disabled>Theme (in dev)</Nav.Link>
                 </Nav.Item>
 
                 <Nav.Item>
@@ -64,13 +65,15 @@ class Edit extends React.Component {
                     onClick={this.submit_all(authUser.uid)}
                     variant="outline-success"
                     className="float-right w-100 text-right">
-                    Submit All
+                    Save All
                   </Button>
                 </Nav.Item>
 
                 <Nav.Item>
-                  <Button variant="outline-danger" className="float-right w-100 text-right">
-                    Reset
+                  <Button
+                    disabled
+                    variant="outline-danger" className="float-right w-100 text-right">
+                    Reset (in dev)
                   </Button>
                 </Nav.Item>
 
@@ -80,11 +83,11 @@ class Edit extends React.Component {
             <Col sm={9}>
               <Tab.Content>
                 <Tab.Pane eventKey="Projects">
-                  <ProjectEditor/>
+                  <ProjectEditorList/>
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="Dimensions">
-                  <DimensionEditor/>
+                  <DimensionEditorList/>
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="Theme">

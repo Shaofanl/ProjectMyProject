@@ -2,7 +2,7 @@ import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
-import { init_user_data } from '../../templates/project'
+import { init_user_template } from '../../templates/project'
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -49,7 +49,7 @@ class Firebase {
                 .set({
                   email: authUser.email,
                   username: authUser.displayName,
-                  data: init_user_data 
+                  data: init_user_template
                 }).then(() => this.user(authUser.uid).once('value'))
             }
             else

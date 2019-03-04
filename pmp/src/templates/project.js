@@ -13,13 +13,14 @@ export const get_init_project = () => {
   };
 }
 
-export const init_user_data = {
+export const init_user_template = {
   theme: "",
-  dimensions: ["Category"],
-  project_nxt_id: 1,
+  dimensions: {"1":"Category"},
+  project_nxt_id: 2,
+  dim_nxt_id: 2,
   projects: {
-    0: {
-      dimensions: {"Category": ["Example", "coding"]},
+    1: {
+      dimensions: {"1": ["Example", "coding"]},
       title: "Example project",
       subtitle: "This is an example project",
       start_date: "2019-01-01",
