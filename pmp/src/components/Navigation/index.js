@@ -35,7 +35,7 @@ class NavigationAuthBase extends React.Component {
 
   render = () => (
     <Navbar variant="light" bg="light" expand="lg">
-      <Navbar.Brand href="#home">PMP</Navbar.Brand>
+      <Navbar.Brand href="/">PMP</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -53,7 +53,7 @@ const NavigationAuth = compose(withRouter, withFirebase)(NavigationAuthBase);
 
 const NavigationNonAuth = () => (
     <Navbar variant="light" bg="light" expand="lg">
-    <Navbar.Brand href="#home">PMP</Navbar.Brand>
+    <Navbar.Brand href="/">PMP</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">

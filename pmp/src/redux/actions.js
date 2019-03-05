@@ -24,3 +24,8 @@ export const removeDim = did => ({
   type: ACTIONTYPE.REMOVE_DIM,
   payload: {did}
 });
+
+export const updateTheme = theme => ({
+  type: ACTIONTYPE.UPDATE_THEME,
+  payload: {theme}
+});

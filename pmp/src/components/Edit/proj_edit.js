@@ -71,7 +71,7 @@ class ProjectEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { show: true };
+    this.state = { show: false };
   }
 
   toggle = () => {
@@ -96,7 +96,7 @@ class ProjectEditor extends React.Component {
 
     return (
   <div>
-    <p>{JSON.stringify(proj)}</p>
+    {/*<p>{JSON.stringify(proj)}</p>*/}
     <Card border="primary">
       <Card.Header as="h5">
         {proj.title || "<No title>"}

@@ -1,6 +1,7 @@
 import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+// import 'firebase/functions'
 
 import { init_user_template } from '../../templates/project'
 
@@ -18,6 +19,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
 
+//     this.functions = app.functions();
     this.auth = app.auth();
     this.db = app.database();
     this.googleProvider = new app.auth.GoogleAuthProvider();

@@ -11,3 +11,5 @@ export const REMOVE_PROJ = "REMOVE_PROJ";
 // export const ADD_DIM = "ADD_DIM";
 export const UPDATE_DIM = "UPDATE_DIM";
 export const REMOVE_DIM = "REMOVE_DIM";  // should also affect projects.dimensions
+
+export const UPDATE_THEME = "UPDATE_THEME";

@@ -95,6 +95,12 @@ function rootReducer(state = initialState, action) {
         projects: copy_obj_except(state.projects, pid)
       };
     }
+    case ACTIONTYPE.UPDATE_THEME: {
+      return {
+        ...state,
+        theme: action.payload.theme,
+      }
+    }
     default:
       return state;
   }

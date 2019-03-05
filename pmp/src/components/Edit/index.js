@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import ProjectEditorList from './proj_edit'
 import DimensionEditorList from './dim_edit'
+import ThemeEditor from './theme_edit'
 
 
 class Edit extends React.Component {
@@ -41,7 +42,7 @@ class Edit extends React.Component {
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
-        <p>{JSON.stringify(this.props.data)}</p>
+      {/*<p>{JSON.stringify(this.props.data)}</p>*/}
 
         <p>Edit</p>
         <Tab.Container defaultActiveKey="Projects">
@@ -57,7 +58,7 @@ class Edit extends React.Component {
                 </Nav.Item>
 
                 <Nav.Item>
-                  <Nav.Link eventKey="Theme" className="text-right" disabled>Theme (in dev)</Nav.Link>
+                  <Nav.Link eventKey="Theme" className="text-right">Theme</Nav.Link>
                 </Nav.Item>
 
                 <Nav.Item>
@@ -91,6 +92,7 @@ class Edit extends React.Component {
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="Theme">
+                  <ThemeEditor/>
                 </Tab.Pane>
 
               </Tab.Content>
