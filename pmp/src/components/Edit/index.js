@@ -24,14 +24,18 @@ class Edit extends React.Component {
   submit_all = uid => () => {
 //  this.setState({ flash:null });
 //    console.log(this.props);
+    
     this.props.firebase.user(uid)
-      .update({ data: this.props.data })
+      .update({ data: this.props.data, 
+        // theme: this.props.data.theme?this.props.data.theme:default_theme
+      })
       .then(() => {
         alert("Submitted!");
       })
       .catch(error => {
         alert("Error! "+error.message);
       });
+
 //  this.flash_message("Submitted!", "success");
   }
 

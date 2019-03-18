@@ -31,7 +31,7 @@ export const init_user_template = {
 `Example Project
 ====
 
-You should write description using markdown.
+You should write description in markdown if you are going to use the default theme.
 `
     }
   } 

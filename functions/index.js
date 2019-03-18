@@ -2,8 +2,8 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const swig = require('swig');
-const showdown = require('showdown'),
-      converter = new showdown.Converter();
+// const showdown = require('showdown'),
+//       converter = new showdown.Converter();
 
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -15,8 +15,8 @@ const showdown = require('showdown'),
 const err_msg = "ERROR: please check your theme or contact the developer.";
 const render = (theme, data) => {
   // console.log(data);
-  for (let pid in data.projects)
-    data.projects[pid].description = converter.makeHtml(data.projects[pid].description);
+  // for (let pid in data.projects)
+  //   data.projects[pid].description = converter.makeHtml(data.projects[pid].description);
   // console.log(data);
   return swig.render(theme, { locals: data });
 }
